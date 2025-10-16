@@ -16,55 +16,55 @@ export default function OurVentures() {
       name: "FruitRush",
       description:
         "Enhancing wellness by promoting healthy eatables with easy access to fresh seasonal fruits & dry fruits at affordable prices.",
-      logo: {fruitrush},
+      logo: fruitrush,
     },
     {
       name: "Tajarba",
       description:
         "Transforming lives and empowering the youth by helping them turn their dreams into reality.",
-      logo: {tajarba},
+      logo: tajarba,
     },
     {
       name: "KnittPurl",
       description:
         "Preferred choice for those seeking unique, handcrafted knitted products.",
-      logo: {knittpurl},
+      logo: knittpurl,
     },
     {
       name: "Benny’s Pet Lounge",
       description:
         "Pakistan’s first luxury pet spa and hotel, known for our commitment to excellence in pet care.",
-      logo: {benny},
+      logo: benny,
     },
     {
       name: "Candle Corner",
       description:
         "Preferred brand for customers with refined tastes in search of premium scented candles.",
-      logo: {candlecorner},
+      logo: candlecorner,
     },
     {
       name: "K-Retreats & Tours",
       description:
         "Offering safe, sustainable and soul-stirring travel experiences.",
-      logo: {kretreats},
+      logo: kretreats,
     },
     {
       name: "Content Cube Creations",
       description:
         "To be a creative force in visual and performing arts, crafting impactful short films and theatrical productions.",
-      logo: {contentcube},
+      logo: contentcube,
     },
     {
       name: "SheXcelerate",
       description:
         "Empowering the next generation of female entrepreneurs and women-led ventures in Pakistan through celebration, opportunity and funding.",
-      logo: {shexcelerate},
+      logo: shexcelerate,
     },
     {
       name: "ImpactX",
       description:
         "Purpose-built incubation centers throughout Pakistan, helping creative entrepreneurs bring their ideas to life and scale their impact.",
-      logo: {impactx},
+      logo: impactx,
     },
   ];
 

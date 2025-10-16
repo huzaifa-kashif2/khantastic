@@ -1,5 +1,14 @@
 import VentureCard from "../components/VentureCard";
 import styles from "../styles/OurVentures.module.css";
+import benny from "../assets/benny.png";
+import candlecorner from "../assets/candlecorner.png";
+import contentcube from "../assets/contentcube.png";
+import fruitrush from "../assets/fruitrush.png";
+import impactx from "../assets/impactx.png";
+import knittpurl from "../assets/knittpurl.png";
+import kretreats from "../assets/krt.png";
+import shexcelerate from "../assets/shexcelerate.png";
+import tajarba from "../assets/tajarba.png";
 
 export default function OurVentures() {
   const ventures = [
@@ -7,55 +16,55 @@ export default function OurVentures() {
       name: "FruitRush",
       description:
         "Enhancing wellness by promoting healthy eatables with easy access to fresh seasonal fruits & dry fruits at affordable prices.",
-      logo: "/assets/fruitrush.png",
+      logo: {fruitrush},
     },
     {
       name: "Tajarba",
       description:
         "Transforming lives and empowering the youth by helping them turn their dreams into reality.",
-      logo: "/assets/tajarba.png",
+      logo: {tajarba},
     },
     {
       name: "KnittPurl",
       description:
         "Preferred choice for those seeking unique, handcrafted knitted products.",
-      logo: "/assets/knittpurl.png",
+      logo: {knittpurl},
     },
     {
       name: "Benny’s Pet Lounge",
       description:
         "Pakistan’s first luxury pet spa and hotel, known for our commitment to excellence in pet care.",
-      logo: "/assets/bennys.png",
+      logo: {benny},
     },
     {
       name: "Candle Corner",
       description:
         "Preferred brand for customers with refined tastes in search of premium scented candles.",
-      logo: "/assets/candlecorner.png",
+      logo: {candlecorner},
     },
     {
       name: "K-Retreats & Tours",
       description:
         "Offering safe, sustainable and soul-stirring travel experiences.",
-      logo: "/assets/kretreats.png",
+      logo: {kretreats},
     },
     {
       name: "Content Cube Creations",
       description:
         "To be a creative force in visual and performing arts, crafting impactful short films and theatrical productions.",
-      logo: "/assets/contentcube.png",
+      logo: {contentcube},
     },
     {
       name: "SheXcelerate",
       description:
         "Empowering the next generation of female entrepreneurs and women-led ventures in Pakistan through celebration, opportunity and funding.",
-      logo: "/assets/shexcelerate.png",
+      logo: {shexcelerate},
     },
     {
       name: "ImpactX",
       description:
         "Purpose-built incubation centers throughout Pakistan, helping creative entrepreneurs bring their ideas to life and scale their impact.",
-      logo: "/assets/impactx.png",
+      logo: {impactx},
     },
   ];
 

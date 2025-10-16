@@ -12,7 +12,7 @@ export default function CreareConsulting() {
         </p>
 
         <a
-          href="#"
+          href="https://creare-consulting.com/"
           className={styles.cta}
           target="_blank"
           rel="noreferrer"

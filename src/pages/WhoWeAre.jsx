@@ -34,15 +34,15 @@ export default function WhoWeAre() {
         <div className={styles.timeline}>
           <div className={styles.timelineItem}>
             <span className={styles.year}>2020</span>
-            <p className={styles.milestone}>Khantastic Ventures established</p>
+            <p className={styles.milestone}>Khantastic Ventures officially launched</p>
           </div>
           <div className={styles.timelineItem}>
             <span className={styles.year}>2021</span>
-            <p className={styles.milestone}>First venture launched — FruitRush</p>
+            <p className={styles.milestone}>Launched 9 new ventures under Eight Venture Studio</p>
           </div>
           <div className={styles.timelineItem}>
             <span className={styles.year}>2023</span>
-            <p className={styles.milestone}>Expanded into consulting & incubation</p>
+            <p className={styles.milestone}>Expanded into Management Consulting</p>
           </div>
           <div className={styles.timelineItem}>
             <span className={styles.year}>2025</span>

@@ -1,14 +1,24 @@
 .navbar {
   position: sticky;
   top: 0;
-  width: auto;
-  background-color: #ffffff;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 3rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  z-index: 100;
+  z-index: 1000;
+  transition: all 0.4s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+  padding: 0.7rem 3rem;
 }
 
 .logoArea {
@@ -17,8 +27,13 @@
 }
 
 .logo {
-  height: 50px;
+  height: 52px;
   width: auto;
+  transition: all 0.3s ease;
+}
+
+.scrolled .logo {
+  height: 44px;
 }
 
 /* ===== HAMBURGER ===== */
@@ -27,11 +42,17 @@
   font-size: 1.8rem;
   cursor: pointer;
   color: #222;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: rgba(255, 215, 0, 0.1);
 }
 
 .hamburger:hover {
-  transform: scale(1.1);
+  background: rgba(255, 215, 0, 0.25);
 }
 
 /* ===== DESKTOP NAV ===== */
@@ -45,84 +66,113 @@
   position: relative;
   text-decoration: none;
   font-weight: 500;
-  color: #222222;
+  font-size: 0.95rem;
+  color: #333;
   transition: color 0.3s ease;
+  padding: 0.3rem 0;
+  letter-spacing: 0.01em;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #FFD700, #FF9500);
+  border-radius: 2px;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .link:hover {
-  color: #ffd700;
+  color: #E6B800;
 }
 
-/* Active highlight + underline */
+.link:hover::after {
+  width: 100%;
+}
+
+/* Active highlight */
 .active {
-  color: #ffd700;
+  color: #E6B800;
+  font-weight: 600;
 }
 
 .active::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 0;
   width: 100%;
-  height: 2px;
-  background-color: #ffd700;
-  border-radius: 2px;
-  transition: width 0.3s ease;
 }
 
 /* ===== CTA BUTTON ===== */
 .chatButton {
-  background-color: #ffd700;
-  color: #222222 !important;
-  padding: 0.6rem 1.2rem;
-  border-radius: 30px;
-  font-weight: 600;
+  background: linear-gradient(135deg, #FFD700, #FF9500);
+  color: #111 !important;
+  padding: 0.6rem 1.4rem;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.35);
+  display: inline-block;
 }
 
 .chatButton:hover {
-  background-color: #e6c200;
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
 }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
   .hamburger {
-    display: block;
+    display: flex;
   }
 
   .navLinks {
-    position: absolute;
-    top: 100%;
-    height: 100vh;
+    position: fixed;
+    top: 0;
     right: 0;
-    background-color: #ffffff;
+    height: 100vh;
+    width: 280px;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(20px);
     flex-direction: column;
     align-items: flex-start;
-    width: 98%;
-    max-width: 280px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 5rem 2rem 2rem;
+    box-shadow: -4px 0 30px rgba(0, 0, 0, 0.15);
     transform: translateX(100%);
-    transition: transform 0.3s ease-in-out;
-    gap: 1.2rem;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 1.5rem;
+    z-index: 999;
+    border-left: 1px solid rgba(255, 215, 0, 0.2);
   }
 
   .showMenu {
     transform: translateX(0);
   }
 
-  .navLinks a {
+  .link {
+    font-size: 1.1rem;
     width: 100%;
   }
 
+  .chatButton {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem 1.5rem;
+  }
+
   .logo {
-    height: 40px;
+    height: 44px;
   }
 }
 
 @media (max-width: 700px) {
   .navbar {
-    padding: 1rem 1.5rem;
+    padding: 0.8rem 1.5rem;
+  }
+  .navbar.scrolled {
+    padding: 0.6rem 1.5rem;
   }
 }

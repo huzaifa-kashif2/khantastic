@@ -25,89 +25,97 @@ export default function Navbar() {
   }, [location]);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [isMenuOpen]);
+
   return (
-    <motion.header
-      className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-    >
-      <div className={styles.logoArea}>
-        <Link to="/">
-          <motion.img
-            src={logo}
-            alt="Khantastic Ventures"
-            className={styles.logo}
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400 }}
-          />
-        </Link>
-      </div>
-
-      <motion.div
-        className={styles.hamburger}
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        whileTap={{ scale: 0.9 }}
+    <>
+      <motion.header
+        className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
-        <AnimatePresence mode="wait">
-          {isMenuOpen ? (
-            <motion.span
-              key="close"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <FaTimes />
-            </motion.span>
-          ) : (
-            <motion.span
-              key="open"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <FaBars />
-            </motion.span>
-          )}
-        </AnimatePresence>
-      </motion.div>
+        {/* Logo */}
+        <div className={styles.logoArea}>
+          <Link to="/">
+            <img src={logo} alt="Khantastic Ventures" className={styles.logo} />
+          </Link>
+        </div>
 
-      <nav className={`${styles.navLinks} ${isMenuOpen ? styles.showMenu : ""}`}>
-        {navItems.map((item, i) => (
-          <motion.div
-            key={item.path}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 + i * 0.07, duration: 0.4 }}
-          >
+        {/* Hamburger */}
+        <button
+          className={styles.hamburger}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+          aria-expanded={isMenuOpen}
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            {isMenuOpen ? (
+              <motion.span
+                key="close"
+                initial={{ rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.18 }}
+              >
+                <FaTimes />
+              </motion.span>
+            ) : (
+              <motion.span
+                key="open"
+                initial={{ rotate: 90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -90, opacity: 0 }}
+                transition={{ duration: 0.18 }}
+              >
+                <FaBars />
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </button>
+
+        {/* Nav Links */}
+        <nav className={`${styles.navLinks} ${isMenuOpen ? styles.showMenu : ""}`}>
+          {navItems.map((item) => (
             <NavLink
+              key={item.path}
               to={item.path}
               className={({ isActive }) =>
                 isActive ? `${styles.link} ${styles.active}` : styles.link
               }
+              onClick={() => setIsMenuOpen(false)}
             >
               {item.name}
             </NavLink>
-          </motion.div>
-        ))}
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 0.4 }}
-        >
-          <Link to="/contact" className={styles.chatButton}>
+          ))}
+          <Link to="/contact" className={styles.chatButton} onClick={() => setIsMenuOpen(false)}>
             Let&apos;s Chat
           </Link>
-        </motion.div>
-      </nav>
-    </motion.header>
+        </nav>
+      </motion.header>
+
+      {/* Mobile overlay backdrop */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            className={styles.overlay}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setIsMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 }

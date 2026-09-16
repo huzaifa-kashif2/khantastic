@@ -13,7 +13,6 @@ export default function ContactForm() {
   });
 
   const [submitted, setSubmitted] = useState(false);
-  const [focused, setFocused] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,14 +25,9 @@ export default function ContactForm() {
     setFormData({ name: "", email: "", phone: "", organization: "", interest: "", message: "" });
   };
 
-  const inputVariants = {
-    focused: { scale: 1.02 },
-    unfocused: { scale: 1 },
-  };
-
   return (
     <section className={styles.contactSection}>
-      {/* Background decorations */}
+      {/* Background orbs */}
       <div className={styles.bgDecor} aria-hidden="true">
         <div className={styles.bgOrb1} />
         <div className={styles.bgOrb2} />
@@ -43,10 +37,10 @@ export default function ContactForm() {
         {/* Header */}
         <motion.div
           className={styles.header}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55 }}
         >
           <div className={styles.sectionTag}>Get In Touch</div>
           <h2 className={styles.heading}>Let&apos;s Chat</h2>
@@ -60,110 +54,104 @@ export default function ContactForm() {
         <motion.form
           className={styles.form}
           onSubmit={handleSubmit}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.55, delay: 0.15 }}
         >
+          {/* Row 1 */}
           <div className={styles.row}>
-            {[
-              { label: "Full Name", name: "name", type: "text", required: true },
-              { label: "Email Address", name: "email", type: "email", required: true },
-            ].map((field) => (
-              <motion.div
-                key={field.name}
-                className={`${styles.field} ${focused === field.name ? styles.fieldFocused : ""}`}
-                variants={inputVariants}
-                animate={focused === field.name ? "focused" : "unfocused"}
-                transition={{ duration: 0.2 }}
-              >
-                <input
-                  type={field.type}
-                  name={field.name}
-                  value={formData[field.name]}
-                  onChange={handleChange}
-                  required={field.required}
-                  onFocus={() => setFocused(field.name)}
-                  onBlur={() => setFocused(null)}
-                  placeholder=" "
-                />
-                <label>{field.label}</label>
-                <div className={styles.inputGlow} />
-              </motion.div>
-            ))}
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="cf-name">Full Name <span className={styles.req}>*</span></label>
+              <input
+                id="cf-name"
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                placeholder="e.g. Ahmed Khan"
+                className={styles.input}
+              />
+            </div>
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="cf-email">Email Address <span className={styles.req}>*</span></label>
+              <input
+                id="cf-email"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                placeholder="you@example.com"
+                className={styles.input}
+              />
+            </div>
           </div>
 
+          {/* Row 2 */}
           <div className={styles.row}>
-            {[
-              { label: "Phone (optional)", name: "phone", type: "text", required: false },
-              { label: "Organization / Startup", name: "organization", type: "text", required: false },
-            ].map((field) => (
-              <motion.div
-                key={field.name}
-                className={`${styles.field} ${focused === field.name ? styles.fieldFocused : ""}`}
-                variants={inputVariants}
-                animate={focused === field.name ? "focused" : "unfocused"}
-                transition={{ duration: 0.2 }}
-              >
-                <input
-                  type={field.type}
-                  name={field.name}
-                  value={formData[field.name]}
-                  onChange={handleChange}
-                  required={field.required}
-                  onFocus={() => setFocused(field.name)}
-                  onBlur={() => setFocused(null)}
-                  placeholder=" "
-                />
-                <label>{field.label}</label>
-                <div className={styles.inputGlow} />
-              </motion.div>
-            ))}
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="cf-phone">Phone <span className={styles.optional}>(optional)</span></label>
+              <input
+                id="cf-phone"
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="+92 300 0000000"
+                className={styles.input}
+              />
+            </div>
+            <div className={styles.field}>
+              <label className={styles.label} htmlFor="cf-org">Organization / Startup <span className={styles.optional}>(optional)</span></label>
+              <input
+                id="cf-org"
+                type="text"
+                name="organization"
+                value={formData.organization}
+                onChange={handleChange}
+                placeholder="Your company name"
+                className={styles.input}
+              />
+            </div>
           </div>
 
-          <motion.div
-            className={`${styles.field} ${focused === "interest" ? styles.fieldFocused : ""}`}
-            variants={inputVariants}
-            animate={focused === "interest" ? "focused" : "unfocused"}
-            transition={{ duration: 0.2 }}
-          >
+          {/* Interest Select */}
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="cf-interest">Area of Interest <span className={styles.req}>*</span></label>
             <select
+              id="cf-interest"
               name="interest"
               value={formData.interest}
               onChange={handleChange}
               required
-              onFocus={() => setFocused("interest")}
-              onBlur={() => setFocused(null)}
+              className={styles.select}
             >
-              <option value="" disabled>Select your interest...</option>
+              <option value="" disabled>Select one...</option>
               <option value="funding">💰 Funding / Investment</option>
               <option value="partnership">🤝 Partnership / Collaboration</option>
               <option value="consulting">📊 Consulting Inquiry</option>
               <option value="general">💬 General Question</option>
             </select>
-            <div className={styles.inputGlow} />
-          </motion.div>
+          </div>
 
-          <motion.div
-            className={`${styles.field} ${focused === "message" ? styles.fieldFocused : ""}`}
-            variants={inputVariants}
-            animate={focused === "message" ? "focused" : "unfocused"}
-            transition={{ duration: 0.2 }}
-          >
+          {/* Message */}
+          <div className={styles.field}>
+            <label className={styles.label} htmlFor="cf-message">Message <span className={styles.req}>*</span></label>
             <textarea
+              id="cf-message"
               name="message"
               value={formData.message}
               onChange={handleChange}
               rows="5"
               required
-              onFocus={() => setFocused("message")}
-              onBlur={() => setFocused(null)}
-              placeholder=" "
+              placeholder="Tell us about your idea or inquiry..."
+              className={styles.textarea}
             />
-            <label>Tell us about your idea or inquiry</label>
-            <div className={styles.inputGlow} />
-          </motion.div>
+          </div>
 
+          {/* Submit */}
           <motion.button
             type="submit"
             className={styles.submitBtn}
@@ -174,19 +162,20 @@ export default function ContactForm() {
             <span className={styles.btnIcon}>✈️</span>
           </motion.button>
 
+          {/* Success */}
           <AnimatePresence>
             {submitted && (
               <motion.div
                 className={styles.successMsg}
-                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                initial={{ opacity: 0, y: 16, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 300 }}
+                exit={{ opacity: 0, y: -12, scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 280, damping: 22 }}
               >
                 <span className={styles.successIcon}>✅</span>
                 <div>
                   <p className={styles.successTitle}>Message Sent!</p>
-                  <p className={styles.successText}>We'll get back to you within 24-48 hours.</p>
+                  <p className={styles.successText}>We&apos;ll get back to you within 24–48 hours.</p>
                 </div>
               </motion.div>
             )}

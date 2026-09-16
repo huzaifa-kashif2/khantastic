@@ -3,28 +3,23 @@ import { motion, useInView } from "framer-motion";
 import styles from "../styles/WhoWeAre.module.css";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0, y: 30 },
   visible: (i = 0) => ({
     opacity: 1, y: 0,
-    transition: { duration: 0.7, delay: i * 0.15, ease: "easeOut" }
+    transition: { duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }
   }),
-};
-
-const stagger = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.15 } },
 };
 
 function AnimatedSection({ children, className }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
   return (
     <motion.div
       ref={ref}
       className={className}
-      variants={stagger}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
+      transition={{ staggerChildren: 0.1 }}
     >
       {children}
     </motion.div>

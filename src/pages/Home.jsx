@@ -1,39 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "../styles/Home.module.css";
 
-// Animated floating orbs background
-function FloatingOrbs() {
-  return (
-    <div className={styles.orbsContainer} aria-hidden="true">
-      {[...Array(6)].map((_, i) => (
-        <div key={i} className={`${styles.orb} ${styles[`orb${i + 1}`]}`} />
-      ))}
-    </div>
-  );
-}
-
-// Animated particles
-function Particles() {
-  return (
-    <div className={styles.particles} aria-hidden="true">
-      {[...Array(20)].map((_, i) => (
-        <div
-          key={i}
-          className={styles.particle}
-          style={{
-            left: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 8}s`,
-            animationDuration: `${6 + Math.random() * 6}s`,
-            width: `${2 + Math.random() * 4}px`,
-            height: `${2 + Math.random() * 4}px`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
+// Pre-compute particle data ONCE (outside component so it never re-computes)
+const PARTICLE_DATA = Array.from({ length: 10 }, (_, i) => ({
+  id: i,
+  left: `${(i * 10.3 + 5) % 100}%`,
+  delay: `${(i * 0.9) % 7}s`,
+  duration: `${7 + (i % 5)}s`,
+  size: `${2 + (i % 3)}px`,
+}));
 
 // Typewriter component
 function Typewriter({ words }) {
@@ -43,13 +20,13 @@ function Typewriter({ words }) {
 
   useEffect(() => {
     const word = words[currentWord];
-    const speed = isDeleting ? 60 : 100;
+    const speed = isDeleting ? 65 : 110;
 
     const timer = setTimeout(() => {
       if (!isDeleting) {
         setDisplayText(word.slice(0, displayText.length + 1));
         if (displayText.length === word.length) {
-          setTimeout(() => setIsDeleting(true), 1500);
+          setTimeout(() => setIsDeleting(true), 1600);
         }
       } else {
         setDisplayText(word.slice(0, displayText.length - 1));
@@ -71,7 +48,7 @@ function Typewriter({ words }) {
   );
 }
 
-// Stats counter
+// Stats counter with IntersectionObserver
 function StatCounter({ end, suffix, label }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -88,8 +65,8 @@ function StatCounter({ end, suffix, label }) {
 
   useEffect(() => {
     if (!started) return;
-    const duration = 2000;
-    const steps = 60;
+    const duration = 1800;
+    const steps = 40;
     const increment = end / steps;
     let current = 0;
     const timer = setInterval(() => {
@@ -111,10 +88,10 @@ function StatCounter({ end, suffix, label }) {
 export default function Home() {
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
-  const typewriterWords = ["Entrepreneurs.", "Innovators.", "Dreamers.", "Leaders."];
+  const typewriterWords = useMemo(() => ["Entrepreneurs.", "Innovators.", "Dreamers.", "Leaders."], []);
 
   return (
     <motion.section
@@ -122,21 +99,42 @@ export default function Home() {
       className={styles.hero}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.5 }}
     >
-      <FloatingOrbs />
-      <Particles />
+      {/* Static gradient orbs — no filter:blur, use box-shadow instead */}
+      <div className={styles.orbsContainer} aria-hidden="true">
+        <div className={styles.orb1} />
+        <div className={styles.orb2} />
+        <div className={styles.orb3} />
+      </div>
 
-      {/* Animated grid lines */}
+      {/* Particles — pre-computed, no rotation */}
+      <div className={styles.particles} aria-hidden="true">
+        {PARTICLE_DATA.map((p) => (
+          <div
+            key={p.id}
+            className={styles.particle}
+            style={{
+              left: p.left,
+              animationDelay: p.delay,
+              animationDuration: p.duration,
+              width: p.size,
+              height: p.size,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Static grid — no animation */}
       <div className={styles.gridLines} aria-hidden="true" />
 
       <motion.div className={styles.content} style={{ y, opacity }}>
         {/* Badge */}
         <motion.div
           className={styles.badge}
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.5, type: "spring" }}
+          transition={{ delay: 0.25, duration: 0.45, type: "spring", stiffness: 260 }}
         >
           <span className={styles.badgeDot} />
           Pakistan&apos;s Premier Venture Studio
@@ -145,9 +143,9 @@ export default function Home() {
         {/* Main Heading */}
         <motion.h1
           className={styles.title}
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.7, ease: "easeOut" }}
+          transition={{ delay: 0.35, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           Empowering{" "}
           <Typewriter words={typewriterWords} />
@@ -158,9 +156,9 @@ export default function Home() {
         {/* Subtitle */}
         <motion.p
           className={styles.subtitle}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.7 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
         >
           We invest in innovative startups, drive strategic growth, and nurture
           Pakistan&apos;s entrepreneurial ecosystem.
@@ -171,27 +169,23 @@ export default function Home() {
           className={styles.buttons}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
+          transition={{ delay: 0.65, duration: 0.55 }}
         >
-          <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.97 }}>
-            <Link to="/ventures" className={styles.primaryBtn}>
-              <span>Explore Ventures</span>
-              <span className={styles.btnArrow}>→</span>
-            </Link>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.05, y: -3 }} whileTap={{ scale: 0.97 }}>
-            <Link to="/contact" className={styles.secondaryBtn}>
-              Let&apos;s Chat
-            </Link>
-          </motion.div>
+          <Link to="/ventures" className={styles.primaryBtn}>
+            Explore Ventures
+            <span className={styles.btnArrow}>→</span>
+          </Link>
+          <Link to="/contact" className={styles.secondaryBtn}>
+            Let&apos;s Chat
+          </Link>
         </motion.div>
 
         {/* Stats Row */}
         <motion.div
           className={styles.statsRow}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0, duration: 0.7 }}
+          transition={{ delay: 0.82, duration: 0.6 }}
         >
           <StatCounter end={9} suffix="+" label="Active Ventures" />
           <div className={styles.statDivider} />
@@ -206,7 +200,7 @@ export default function Home() {
         className={styles.scrollIndicator}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
+        transition={{ delay: 1.3 }}
       >
         <div className={styles.scrollMouse}>
           <div className={styles.scrollWheel} />

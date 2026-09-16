@@ -139,15 +139,18 @@ body {
   51%, 100% { opacity: 0; }
 }
 
-/* ===== CURSOR GLOW ===== */
-.cursor-glow {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  background: radial-gradient(circle, rgba(255,215,0,0.6), transparent);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s;
+/* ===== PERFORMANCE: use transform for layout shifts ===== */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== REDUCED MOTION: respect user preference ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

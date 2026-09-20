@@ -195,18 +195,6 @@ export default function Home() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className={styles.scrollIndicator}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.3 }}
-      >
-        <div className={styles.scrollMouse}>
-          <div className={styles.scrollWheel} />
-        </div>
-        <span>Scroll to explore</span>
-      </motion.div>
     </motion.section>
   );
 }

@@ -11,10 +11,11 @@
 .topGlow {
   position: absolute;
   top: 0;
-  left: 10%;
-  right: 10%;
+  left: 5%;
+  right: 5%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.7), rgba(255, 150, 0, 0.5), rgba(255, 215, 0, 0.7), transparent);
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.35), 0 2px 20px rgba(255, 215, 0, 0.12);
 }
 
 .container {

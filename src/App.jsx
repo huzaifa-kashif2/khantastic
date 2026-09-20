@@ -50,15 +50,24 @@ function AnimatedRoutes() {
   );
 }
 
+function AppShell() {
+  const location = useLocation();
+  const isKVCodes = location.pathname.startsWith('/kvcodes');
+
+  return (
+    <div style={{ background: '#0a0a0a', minHeight: '100vh' }}>
+      {!isKVCodes && <Navbar />}
+      <AnimatedRoutes />
+      {!isKVCodes && <ScrollToTopButton />}
+      {!isKVCodes && <Footer />}
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <Router>
-      <div style={{ background: '#0a0a0a', minHeight: '100vh' }}>
-        <Navbar />
-        <AnimatedRoutes />
-        <ScrollToTopButton />
-        <Footer />
-      </div>
+      <AppShell />
     </Router>
   );
 }

@@ -21,32 +21,34 @@
 }
 
 .card:hover {
-  border-color: rgba(255, 215, 0, 0.35);
+  border-color: rgba(255, 215, 0, 0.4);
   box-shadow:
-    0 25px 60px rgba(0, 0, 0, 0.4),
-    0 0 30px rgba(255, 215, 0, 0.12),
-    inset 0 0 30px rgba(255, 215, 0, 0.03);
-  background: rgba(255, 215, 0, 0.05);
+    0 30px 70px rgba(0, 0, 0, 0.45),
+    0 0 40px rgba(255, 215, 0, 0.14),
+    inset 0 0 30px rgba(255, 215, 0, 0.04);
+  background: rgba(255, 215, 0, 0.055);
 }
 
 .card:hover .cardGlow {
   opacity: 1;
 }
 
-/* Top border shimmer on hover */
+/* Top border shimmer beam on hover */
 .card::before {
   content: '';
   position: absolute;
   top: 0;
-  left: -100%;
+  left: 0;
   width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #FFD700, transparent);
-  transition: left 0.5s ease;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, #FFD700 40%, #FF9500 60%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
 }
 
 .card:hover::before {
-  left: 100%;
+  opacity: 1;
 }
 
 /* ===== LOGO ===== */

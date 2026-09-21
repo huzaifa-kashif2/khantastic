@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { FaCode, FaLinkedin, FaInstagram, FaGithub, FaTwitter, FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
+import { FaLinkedin, FaInstagram, FaGithub, FaTwitter, FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
+import kvcodesLogo from "../assets/kvcodes_logo.jpeg";
 import styles from "../styles/KVCodesFooter.module.css";
 
 const services = [
@@ -36,7 +37,7 @@ export default function KVCodesFooter() {
         {/* Brand column */}
         <div className={styles.brandCol}>
           <div className={styles.logo}>
-            <div className={styles.logoIcon}><FaCode /></div>
+            <img src={kvcodesLogo} alt="KV Codes" className={styles.logoImg} />
             <span className={styles.logoText}>KV<span className={styles.logoCyan}>Codes</span></span>
           </div>
           <p className={styles.tagline}>

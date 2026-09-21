@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBars, FaTimes, FaCode } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
+import kvcodesLogo from "../assets/kvcodes_logo.jpeg";
 import styles from "../styles/KVCodesNavbar.module.css";
 
 const NAV_ITEMS = [
@@ -113,7 +114,7 @@ export default function KVCodesNavbar() {
       >
         {/* Logo */}
         <div className={styles.logo} onClick={() => navigate("/")} role="button" tabIndex={0}>
-          <div className={styles.logoIcon}><FaCode /></div>
+          <img src={kvcodesLogo} alt="KV Codes" className={styles.logoImg} />
           <span className={styles.logoText}>
             KV<span className={styles.logoCyan}>Codes</span>
           </span>
